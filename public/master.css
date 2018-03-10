@@ -4,6 +4,183 @@
   box-sizing: border-box;
 }
 body {
-  background: skyblue;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #525f7f;
+}
+header {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+}
+nav {
+  max-width: 1140px;
+  margin: 0 auto;
+  height: 110px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav a {
+  text-decoration: none;
   color: #fff;
+  letter-spacing: 0.015em;
+}
+nav div a {
+  margin-left: 20px;
+}
+nav div a:last-of-type {
+  padding: 10px 24px;
+  border-radius: 100px;
+  border: 2px solid #fff;
+}
+nav div a:last-of-type:hover {
+  background: rgba(255,255,255,.3);
+}
+.hero {
+  height: 600px;
+  background:#9284ff;
+  background: linear-gradient(135deg, #9284ff 0%,#c7c1ff 100%);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction: column;
+  color: #fff;
+}
+.hero h1 {
+  margin-bottom: 30px;
+}
+a.btn {
+  white-space: nowrap;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 14px;
+  box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: .025em;
+  text-decoration: none;
+  color: #fff;
+  background: #9284ff;
+  font-size: .9em;
+  font-weight: 600;
+  display: inline-block;
+  transition: all .15s ease;
+}
+a.btn:hover {
+  background: #7795f8;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+}
+.container {
+  background:#fff;
+  padding:48px;
+  min-height:360px;
+  border-radius:5px;
+  max-width:1140px;
+  margin:0 auto;
+  position:relative;
+  top:-80px;
+}
+.shadow {
+  width: 100%;
+  height:260px;
+  background:blue;
+  border-radius:5px;
+  position:absolute;
+  top:0;
+  left:0;
+  box-shadow: 0 16px 80px 0 rgba(0,0,0,0.05);
+  z-index:-1;
+}
+.container h1 {
+  margin: 40px auto 20px auto;
+  font-size: 2.3em;
+  max-width:650px;
+}
+p {
+  margin: 20px auto;
+  line-height: 1.6;
+  max-width:650px;
+  color:#777;
+}
+strong {
+  color: #525f7f;
+}
+.btn-google {
+  height: 40px;
+  /* width: max-content; */
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  color: #7F7F7F;
+  text-decoration: none;
+  background: #fff;
+  padding: 10px 12px;
+  border-radius: 4px;
+  margin: 0 auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: box-shadow 0.15s cubic-bezier(.25,.8,.25,1);
+}
+.btn-google svg {
+  height: 100%;
+  margin-right: 20px;
+}
+.btn-google:hover {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.1);
+}
+
+
+
+
+
+
+
+
+
+/*modal styling*/
+/*###############################################################################################*/
+/* the modal background */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 999; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+  animation: fadeIn .2s ease;
+}
+@keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  max-width: 600px; /* Could be more or less, depending on screen size */
+  box-shadow: 0 50px 100px rgba(50,50,93,.05), 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.1);
+}
+
+/* The Close Button */
+.modal .modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 16px;
+}
+
+.modal .modal-close:hover,
+.modal .modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }

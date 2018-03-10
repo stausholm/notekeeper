@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Homepage</title>
-    <link rel="stylesheet" href="master.css">
-  </head>
-  <body>
-    Homepage
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Homepage</title>
+  <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono|Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="master.css">
+</head>
+<body>
+  <% include partials/header %>
+  <div class="hero">
+    <h1>Tagline</h1>
+    <!-- <a href="/" class="btn">Link text</a> -->
+  </div>
+  <div class="container">
+    <div class="shadow"></div>
+    <h1>Where we're going, we don't need roads</h1>
+    <p>whoa, whoa Doc, stuck here, I can't be stuck here, I got a life in 1985. I got a girl. Okay, okay you guys, oh ha ha ha very funny. Hey you guys are being real mature. I gotta go, uh, I gotta go. Thanks very much, it was wonderful, you were all great. See you all later, much later. Thanks a lot, kid. Last night, Darth Vader came down from planet Vulcan. And he told me that if I didn't take Lorraine, that he'd melt my brain.</p>
+    <p>Don't tell me. Uh, you want me to buy a subscription to the Saturday Evening Post? That's right, twenty five years into the future. I've always dreamed on seeing the future, looking beyond my years, seeing the progress of mankind. I'll also be able to see who wins the next twenty-five world series. I haven't Oh Mom, there's nothing wrong with calling a boy. Bear with me, Marty, all of your questions will be answered. Roll tape, we'll proceed.</p>
+    <p>Unfortunately no, it requires something with a little more kick, plutonium. Get out of town, I didn't know you did anything creative. Ah, let me read some. Alright, c'mon, I think we're safe. Say, why do you let those boys push you around like that? George, there's nothing to be scared of. All it takes is a little self confidence. You know, if you put your mind to it, you could accomplish anything.</p>
+    <!-- <a href="/auth/google" class="btn-google">
+      <svg viewBox="0 0 256 262" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+      	<g>
+      		<path d="M255.878,133.451 C255.878,122.717 255.007,114.884 253.122,106.761 L130.55,106.761 L130.55,155.209 L202.497,155.209 C201.047,167.249 193.214,185.381 175.807,197.565 L175.563,199.187 L214.318,229.21 L217.003,229.478 C241.662,206.704 255.878,173.196 255.878,133.451" fill="#4285F4"></path>
+      		<path d="M130.55,261.1 C165.798,261.1 195.389,249.495 217.003,229.478 L175.807,197.565 C164.783,205.253 149.987,210.62 130.55,210.62 C96.027,210.62 66.726,187.847 56.281,156.37 L54.75,156.5 L14.452,187.687 L13.925,189.152 C35.393,231.798 79.49,261.1 130.55,261.1" fill="#34A853"></path>
+      		<path d="M56.281,156.37 C53.525,148.247 51.93,139.543 51.93,130.55 C51.93,121.556 53.525,112.853 56.136,104.73 L56.063,103 L15.26,71.312 L13.925,71.947 C5.077,89.644 0,109.517 0,130.55 C0,151.583 5.077,171.455 13.925,189.152 L56.281,156.37" fill="#FBBC05"></path>
+      		<path d="M130.55,50.479 C155.064,50.479 171.6,61.068 181.029,69.917 L217.873,33.943 C195.245,12.91 165.798,0 130.55,0 C79.49,0 35.393,29.301 13.925,71.947 L56.136,104.73 C66.726,73.253 96.027,50.479 130.55,50.479" fill="#EB4335"></path>
+      	</g>
+      </svg>
+      Sign in with Google
+    </a> -->
+  </div>
+
+  <div id="login-modal" class="modal">
+    <div class="modal-content animate">
+      <div class="modal-header">
+        <span class="modal-close">&times;</span>
+        <p>Sign In / Sign Up using...</p>
+      </div>
+      <div class="modal-body" id="edit-body">
+        <a href="/auth/google" class="btn-google">
+          <svg viewBox="0 0 256 262" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+          	<g>
+          		<path d="M255.878,133.451 C255.878,122.717 255.007,114.884 253.122,106.761 L130.55,106.761 L130.55,155.209 L202.497,155.209 C201.047,167.249 193.214,185.381 175.807,197.565 L175.563,199.187 L214.318,229.21 L217.003,229.478 C241.662,206.704 255.878,173.196 255.878,133.451" fill="#4285F4"></path>
+          		<path d="M130.55,261.1 C165.798,261.1 195.389,249.495 217.003,229.478 L175.807,197.565 C164.783,205.253 149.987,210.62 130.55,210.62 C96.027,210.62 66.726,187.847 56.281,156.37 L54.75,156.5 L14.452,187.687 L13.925,189.152 C35.393,231.798 79.49,261.1 130.55,261.1" fill="#34A853"></path>
+          		<path d="M56.281,156.37 C53.525,148.247 51.93,139.543 51.93,130.55 C51.93,121.556 53.525,112.853 56.136,104.73 L56.063,103 L15.26,71.312 L13.925,71.947 C5.077,89.644 0,109.517 0,130.55 C0,151.583 5.077,171.455 13.925,189.152 L56.281,156.37" fill="#FBBC05"></path>
+          		<path d="M130.55,50.479 C155.064,50.479 171.6,61.068 181.029,69.917 L217.873,33.943 C195.245,12.91 165.798,0 130.55,0 C79.49,0 35.393,29.301 13.925,71.947 L56.136,104.73 C66.726,73.253 96.027,50.479 130.55,50.479" fill="#EB4335"></path>
+          	</g>
+          </svg>
+          Sign in with Google
+        </a>
+        <p>some other strategies</p>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="main.js"></script>
+</body>
 </html>
