@@ -12,13 +12,34 @@ document.querySelectorAll('li').forEach((e) => {
         var data = JSON.parse(xhttp.response);
         console.log(data);
         // populate modal with data
+        var created = new Date(data.created);
+        var updated = new Date(data.updated);
+        var now = new Date();
+        //var dateDiff = Math.floor((now - updated) / (1000*60*60*24)); //get the diff in days
+        var dateDiff = now - updated;
+        if (dateDiff < 1000*60) {
+          //diff is less than 1 minute
+          dateDiff = "less than 1 minute";
+
+        } else if (dateDiff < 1000*60*60) {
+          //diff is less than 1 hour
+          dateDiff = Math.floor((dateDiff) / (1000*60)) + " minute(s)";
+
+        } else if (dateDiff < 1000*60*60*24) {
+          //diff is less than 24 hours
+          dateDiff = Math.floor((dateDiff) / (1000*60*60)) + " hour(s)";
+
+        } else {
+          dateDiff = Math.floor((dateDiff) / (1000*60*60*24)) + " day(s)";
+        }
+
         document.querySelector('.modal-editor').innerHTML = data.noteBody;
         document.getElementById('modal-title').textContent = data.noteBody.substr(0,15) + "...";
         document.getElementById('modal-word-count').textContent = data.noteBody.length + " characters";
         document.getElementById('modal-read-time').textContent = "TBD min read";
-        document.getElementById('modal-update-info').textContent = "Saved TBD days ago";
-        document.getElementById('modal-editor-created').textContent = "Created: " + data.created;
-        document.getElementById('modal-editor-updated').textContent = "Last Updated: " + data.updated;
+        document.getElementById('modal-update-info').textContent = "Saved " + dateDiff + " ago";
+        document.getElementById('modal-editor-created').textContent = "Created: " + formatDate(created);
+        document.getElementById('modal-editor-updated').textContent = "Last Updated: " + formatDate(updated);
         document.getElementById('save-btn').setAttribute("data-id", data._id);
         document.getElementById('delete-btn').setAttribute("data-id", data._id);
       }
@@ -84,7 +105,28 @@ function editModal() {
 
 
 
+function formatDate(date) {
+  var monthNames = [
+    "Jan", "Feb", "Mar",
+    "Apr", "May", "Jun", "Jul",
+    "Aug", "Sep", "Oct",
+    "Nov", "Dec"
+  ];
 
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+
+  return day + ' ' + monthNames[monthIndex] + ' ' + year + ' ' + hours + ':' + minutes;
+}
+
+for (var i = 0; i < document.getElementsByTagName('ul')[0].children.length; i++) {
+  var x = new Date(document.getElementsByTagName('ul')[0].children[i].children[1].textContent);
+  document.getElementsByTagName('ul')[0].children[i].children[1].textContent = formatDate(x);
+}
 
 
 

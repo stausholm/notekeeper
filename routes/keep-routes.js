@@ -63,6 +63,7 @@ router.put('/requestSpecificDocument/:thisDoc', authCheck, jsonParser, (req, res
     doc.updated = req.body.updated;
     user.save().then((record) => {
       console.log('record updated: ' + record);
+      //this returns the updated user without the updated record
       res.send(record);
     })
   })
