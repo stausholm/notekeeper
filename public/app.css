@@ -1,0 +1,329 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html { margin-left: calc(100vw - 100%); } /* https://css-tricks.com/elegant-fix-jumping-scrollbar-issue/ */
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #525f7f;
+  font-size: 16px;
+}
+header, .body-container {
+  padding: 0 20px;
+}
+
+nav {
+  height: 80px;
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav input {
+  background: #f4f4f4;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 50px;
+  outline: none;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16px;
+}
+nav input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #555;
+}
+nav input::-moz-placeholder { /* Firefox 19+ */
+  color: #555;
+}
+nav input:-ms-input-placeholder { /* IE 10+ */
+  color: #555;
+}
+nav input:-moz-placeholder { /* Firefox 18- */
+  color: #555;
+}
+
+nav div {
+  display: flex;
+  align-items: center;
+}
+nav a:first-of-type {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #555;
+  padding: 5px;
+}
+nav a:last-of-type {
+  width: 46px;
+  height: 46px;
+  background: #f4f4f4;
+  border-radius: 50%;
+  display: block;
+}
+
+
+
+
+.body-container ul {
+  list-style-type: none;
+  max-width: 1140px;
+  margin: 0 auto;
+  border-top: 1px solid #e2e2e2;
+  margin-top: 90px;
+}
+ul li {
+  border-bottom: 1px solid #e2e2e2;
+  padding: 30px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+li:hover {
+  background: #f4f4f4;
+  cursor: pointer;
+}
+
+li p:last-of-type {
+  opacity: .33;
+}
+
+
+#edit-modal {
+  /* display: block; */
+}
+
+
+#edit-modal .modal-content {
+  border: none;
+  padding: 0;
+  margin: 80px auto 170px auto;
+  max-width: 1140px;
+  background-color: #f6f9fc;
+  /* transform: translateX(10px) ; */
+}
+
+
+#edit-modal .modal-header {
+  background-color: #9599E2;
+  background-image: linear-gradient(180deg, #8BC6EC 0%, #9599E2 100%);
+  height: 300px;
+  display: flex;
+  padding-bottom: 50px;
+  color: #fff;
+}
+#edit-modal .modal-header-body, #edit-modal .modal-body{
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+#edit-modal .modal-header-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+
+#edit-modal .modal-header-body p:last-of-type {
+  opacity: .79;
+}
+#edit-modal .modal-header-body h2 {
+  font-size: 3em;
+  margin-top: -3px;
+  margin-bottom: 16px;
+  margin-left: -3px;
+}
+#edit-modal .modal-header-body div div:last-of-type {
+  margin-top: 28px;
+  margin-left: -4px;
+}
+#edit-modal .modal-header-body button {
+  border: none;
+  outline: none;
+  background: #fff;
+  color: #7b81bd;
+  padding: 4px 16px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 12px;
+}
+#edit-modal .modal-header-body button:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+#edit-modal .modal-body {
+  margin: 40px auto;
+}
+
+
+#edit-modal .modal-editor-info {
+  border-top: 1px solid rgba(82, 95, 127, 0.5);
+  opacity: .5;
+  padding-top: 5px;
+  font-style: italic;
+  padding-bottom: 40px;
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+#edit-modal .modal-editor {
+  border: 1px solid rgba(0,0,0,0);
+  margin: -10px;
+  padding: 10px;
+}
+
+
+#edit-modal .modal-editor:hover {
+  border-color: rgba(82, 95, 127, 0.24);
+}
+
+#edit-modal .modal-editor:focus {
+  outline: none;
+  background: #fff;
+  border-color: rgba(82, 95, 127, 0.28);
+}
+
+
+#edit-modal.scrolled .modal-header {
+  position: fixed;
+  max-width: 1140px;
+  width: 100%;
+  top: -250px;
+  /* height: 50px; */
+}
+#edit-modal.scrolled .modal-header-body {
+  position: relative;
+}
+#edit-modal.scrolled .modal-header-body > p, #edit-modal.scrolled .modal-header-body div div p:first-of-type {
+  display: none;
+}
+#edit-modal.scrolled .modal-header-body h2 {
+  font-size: 1em;
+  margin-bottom: 0;
+}
+#edit-modal.scrolled .modal-header-body > div {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  animation: reveal2 .2s cubic-bezier(.91,.05,.19,.85);
+}
+@keyframes reveal2 {
+  0% {opacity: 0; transform: translateY(30px);}
+  33% {opacity: 0; }
+  100% {opacity: 100; transform: translateY(0);}
+}
+#edit-modal.scrolled .modal-body {
+  margin-top: 370px;
+  padding-top: 50px;
+}
+#edit-modal.scrolled .modal-header-body div div:last-of-type {
+  margin: 0;
+}
+
+/*modal styling*/
+/*###############################################################################################*/
+/* the modal background */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 999; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+  animation: fadeIn .2s ease;
+}
+@keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  max-width: 600px; /* Could be more or less, depending on screen size */
+  box-shadow: 0 50px 100px rgba(50,50,93,.05), 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.1);
+}
+
+/* The Close Button */
+.modal .modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 16px;
+}
+
+.modal .modal-close:hover,
+.modal .modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+/* Add Zoom Animation */
+.animate {
+  animation: animatezoom 0.2s;
+}
+
+@keyframes animatezoom {
+  0% {transform: scale(0); opacity: 0}
+  80% {transform: scale(1.02);}
+  100% {transform: scale(1); opacity: 1}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+a.btn {
+  white-space: nowrap;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 14px;
+  box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: .025em;
+  text-decoration: none;
+  color: #fff;
+  background: #9284ff;
+  font-size: .9em;
+  font-weight: 600;
+  display: inline-block;
+  transition: all .15s ease;
+}
+a.btn:hover {
+  background: #7795f8;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+}

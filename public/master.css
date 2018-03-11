@@ -184,3 +184,20 @@ strong {
   text-decoration: none;
   cursor: pointer;
 }
+
+
+
+
+
+
+
+/* Add Zoom Animation */
+.animate {
+  animation: animatezoom 0.2s;
+}
+
+@keyframes animatezoom {
+  0% {transform: scale(0); opacity: 0}
+  80% {transform: scale(1.02);}
+  100% {transform: scale(1); opacity: 1}
+}

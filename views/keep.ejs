@@ -1,10 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    welcome <%= user.username %>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Keep</title>
+  <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono|Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="../app.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <input type="text" name="" value="" placeholder="Search">
+      <div class="">
+        <a href="#" id="new-item-btn">New Item</a>
+        <a href="#"><img src="/images/avatar.svg" alt=""></a>
+      </div>
+    </nav>
+  </header>
+  <!-- <a href="/">Home</a> -->
+  <div class="body-container">
+    <ul>
+      <% if (user.userDocuments.length > 0) { %>
+        <% for (var i = 0; i < user.userDocuments.length; i++) { %>
+          <li data-id="<%= user.userDocuments[i]._id %>">
+            <p><%= user.userDocuments[i].noteBody.substr(0,15) %>...</p>
+            <p><%= user.userDocuments[i].updated %></p>
+          </li>
+        <% } %>
+      <% } else { %>
+        <p>You aint got no documents saved!</p>
+      <% } %>
+    </ul>
+
+  </div>
+
+  <div id="login-modal" class="modal">
+    <div class="modal-content animate">
+      <div class="modal-header">
+        <span class="modal-close">&times;</span>
+        <h2>Yo, <%= user.username %></h2>
+      </div>
+      <div class="modal-body">
+        <a href="/auth/signout" class="btn">Sign Out</a>
+        <a href="#" class="btn">Delete your Keep Account</a>
+      </div>
+    </div>
+  </div>
+  <% include partials/edit-modal %>
+  <script type="text/javascript" src="../ajax.js"></script>
+  <script type="text/javascript" src="../main.js"></script>
+  <script>
+    var editing = false;
+    window.addEventListener("beforeunload", function (event) {
+      if (document.getElementById('edit-modal').style.display == "block" && editing == true) {
+        event.returnValue = "cool";
+        console.log('cool');
+      }
+    });
+  </script>
+</body>
 </html>

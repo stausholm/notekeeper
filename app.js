@@ -18,7 +18,7 @@ app.use(express.static('public'));
 
 
 app.use(cookieSession({
-  maxAge: 10*60*1000, //10 minutes //24*60*60*1000, // 1 day //how long should the cookie to last. number is in milliseconds
+  maxAge: 24*60*60*1000, // 1 day //how long should the cookie to last. number is in milliseconds
   keys: [keys.session.cookieKey]
 }));
 
@@ -41,7 +41,11 @@ app.use('/keep', keepRoutes);
 
 //home route
 app.get('/', (req, res) => {
-  res.render('index', {user: req.user});
+  if (!req.user) {
+    res.render('index');
+  } else {
+    res.redirect('keep');
+  }
 });
 
 app.listen(3000, () => {
