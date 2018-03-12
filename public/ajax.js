@@ -53,6 +53,7 @@ document.querySelectorAll('li').forEach((e) => {
 document.querySelector('#new-item-btn').onclick = function() {
   editModal();
   document.querySelector('.modal-editor').innerHTML = "";
+  document.execCommand("defaultParagraphSeparator", false, "p");
   document.querySelector('.modal-editor').focus();
   document.getElementById('modal-title').textContent = "New Item...";
   document.getElementById('modal-word-count').textContent = "0 words";
@@ -123,9 +124,11 @@ function formatDate(date) {
   return day + ' ' + monthNames[monthIndex] + ' ' + year + ' ' + hours + ':' + minutes;
 }
 
-for (var i = 0; i < document.getElementsByTagName('ul')[0].children.length; i++) {
-  var x = new Date(document.getElementsByTagName('ul')[0].children[i].children[1].textContent);
-  document.getElementsByTagName('ul')[0].children[i].children[1].textContent = formatDate(x);
+if (document.getElementsByTagName('ul')[0].children.length > 0) {
+  for (var i = 0; i < document.getElementsByTagName('ul')[0].children.length; i++) {
+    var x = new Date(document.getElementsByTagName('ul')[0].children[i].children[1].textContent);
+    document.getElementsByTagName('ul')[0].children[i].children[1].textContent = formatDate(x);
+  }
 }
 
 
@@ -138,7 +141,11 @@ document.querySelector('.modal-editor').onblur = function() {
 };
 
 
-
+document.querySelectorAll('.modal-editor-modifiers button').forEach((e) => {
+  e.onclick = () => {
+    document.execCommand('formatblock', false, e.value);
+  }
+});
 
 
 
@@ -159,6 +166,7 @@ document.querySelector('#delete-btn').onclick = function() {
       if (this.readyState == 4 && this.status == 200) {
         var data = JSON.parse(xhttp.responseText);
         console.log(data);
+        location.reload();
       }
     }
   } else {
@@ -171,6 +179,20 @@ document.querySelector('#delete-btn').onclick = function() {
 
 
 
+document.getElementById('delete-user-btn').onclick = function() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("DELETE", "/keep", true);
+  // xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send();
+
+  xhttp.onload = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var data = JSON.parse(xhttp.responseText);
+      console.log(data);
+      location.reload();
+    }
+  }
+}
 
 
 
@@ -200,6 +222,7 @@ document.querySelector('#save-btn').onclick = function() {
       if (this.readyState == 4 && this.status == 200) {
         var data = JSON.parse(xhttp.responseText);
         console.log(data);
+        location.reload();
       }
     }
 
@@ -217,6 +240,7 @@ document.querySelector('#save-btn').onclick = function() {
       if (this.readyState == 4 && this.status == 200) {
         var data = JSON.parse(xhttp.responseText);
         console.log(data);
+        location.reload();
       }
     }
   }

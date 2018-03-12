@@ -70,6 +70,13 @@ router.put('/requestSpecificDocument/:thisDoc', authCheck, jsonParser, (req, res
 });
 
 
+// delete the user and all their data 
+router.delete('/', authCheck, (req, res) => {
+  User.findByIdAndRemove({_id:req.user.id}).then((user) => {
+    console.log('user deleted');
+    res.send(user);
+  })
+});
 
 
 module.exports = router;

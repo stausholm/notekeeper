@@ -27,25 +27,14 @@
             <p><%= user.userDocuments[i].updated %></p>
           </li>
         <% } %>
-      <% } else { %>
-        <p>You aint got no documents saved!</p>
       <% } %>
     </ul>
-
+    <% if (user.userDocuments.length == 0) { %>
+      <p class="no-notes-message">You aint got no notes!</p>
+    <% } %>
   </div>
 
-  <div id="login-modal" class="modal">
-    <div class="modal-content animate">
-      <div class="modal-header">
-        <span class="modal-close">&times;</span>
-        <h2>Yo, <%= user.username %></h2>
-      </div>
-      <div class="modal-body">
-        <a href="/auth/signout" class="btn">Sign Out</a>
-        <a href="#" class="btn">Delete your Keep Account</a>
-      </div>
-    </div>
-  </div>
+  <% include partials/avatar-modal %>
   <% include partials/edit-modal %>
   <script type="text/javascript" src="../ajax.js"></script>
   <script type="text/javascript" src="../main.js"></script>
