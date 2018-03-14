@@ -79,25 +79,25 @@ nav a:last-of-type {
 
 
 
-.body-container ul {
+.body-container ul.list-ul {
   list-style-type: none;
   max-width: 1140px;
   margin: 0 auto;
   border-top: 1px solid #e2e2e2;
   margin-top: 90px;
 }
-ul li {
+ul.list-ul li {
   border-bottom: 1px solid #e2e2e2;
   padding: 30px 20px;
   display: flex;
   justify-content: space-between;
 }
-li:hover {
+ul.list-ul li:hover {
   background: #f4f4f4;
   cursor: pointer;
 }
 
-li p:last-of-type {
+ul.list-ul li p:last-of-type {
   opacity: .33;
 }
 
@@ -164,6 +164,9 @@ li p:last-of-type {
   font-weight: 600;
   margin-right: 12px;
 }
+#edit-modal .modal-header-body button:last-of-type {
+  margin-right: 0;
+}
 #edit-modal .modal-header-body button:hover {
   opacity: .8;
   cursor: pointer;
@@ -199,6 +202,42 @@ li p:last-of-type {
   background: #fff;
   border-color: rgba(82, 95, 127, 0.28);
 }
+
+
+#edit-modal .modal-editor ul {
+  list-style-type: none;
+}
+
+#edit-modal .modal-editor ul li {
+  /* padding-left: 10px; */
+}
+#edit-modal .modal-editor ul li:hover {
+  background: #eaf0f7;
+  cursor: pointer;
+}
+
+#edit-modal .modal-editor ul li::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px #fff, 0 0 0 2px #525f7f;
+}
+
+#edit-modal .modal-editor ul li.list-checked {
+  text-decoration: line-through;
+}
+
+#edit-modal .modal-editor ul li.list-checked::before {
+  content: "";
+  background: #525f7f;
+}
+
+
+
 
 
 #edit-modal.scrolled .modal-header {

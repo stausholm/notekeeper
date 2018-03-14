@@ -23,25 +23,29 @@ document.querySelectorAll('li').forEach((e) => {
 
         } else if (dateDiff < 1000*60*60) {
           //diff is less than 1 hour
-          dateDiff = Math.floor((dateDiff) / (1000*60)) + " minute(s)";
+          dateDiff = Math.floor((dateDiff) / (1000*60));
+          dateDiff = dateDiff > 1 ? dateDiff + " minutes" : dateDiff + " minute";
 
         } else if (dateDiff < 1000*60*60*24) {
           //diff is less than 24 hours
-          dateDiff = Math.floor((dateDiff) / (1000*60*60)) + " hour(s)";
+          dateDiff = Math.floor((dateDiff) / (1000*60*60));
+          dateDiff = dateDiff > 1 ? dateDiff + " hours" : dateDiff + " hour";
 
         } else {
-          dateDiff = Math.floor((dateDiff) / (1000*60*60*24)) + " day(s)";
+          dateDiff = Math.floor((dateDiff) / (1000*60*60*24));
+          dateDiff = dateDiff > 1 ? dateDiff + " days" : dateDiff + " day";
         }
 
         document.querySelector('.modal-editor').innerHTML = data.noteBody;
-        document.getElementById('modal-title').textContent = data.noteBody.substr(0,15) + "...";
-        document.getElementById('modal-word-count').textContent = data.noteBody.length + " characters";
+        document.getElementById('modal-title').textContent = data.noteBody.replace(/<(\/)?[a-zA-Z0-9\s"=-]+>/g, " ").substr(0,15) + "...";
+        document.getElementById('modal-word-count').textContent = data.noteBody.replace(/<(\/)?[a-zA-Z0-9\s"=-]+>/g, " ").length + " characters"; // length also counts newline as a character, so a doc with 19 letters spaced out on 6 lines, will have a length of 19+6
         document.getElementById('modal-read-time').textContent = "TBD min read";
         document.getElementById('modal-update-info').textContent = "Saved " + dateDiff + " ago";
         document.getElementById('modal-editor-created').textContent = "Created: " + formatDate(created);
         document.getElementById('modal-editor-updated').textContent = "Last Updated: " + formatDate(updated);
         document.getElementById('save-btn').setAttribute("data-id", data._id);
         document.getElementById('delete-btn').setAttribute("data-id", data._id);
+        addListenerToListItems();
       }
     };
 
@@ -53,7 +57,6 @@ document.querySelectorAll('li').forEach((e) => {
 document.querySelector('#new-item-btn').onclick = function() {
   editModal();
   document.querySelector('.modal-editor').innerHTML = "";
-  document.execCommand("defaultParagraphSeparator", false, "p");
   document.querySelector('.modal-editor').focus();
   document.getElementById('modal-title').textContent = "New Item...";
   document.getElementById('modal-word-count').textContent = "0 words";
@@ -141,10 +144,46 @@ document.querySelector('.modal-editor').onblur = function() {
 };
 
 
+
+document.execCommand("defaultParagraphSeparator", false, "p");
+
 document.querySelectorAll('.modal-editor-modifiers button').forEach((e) => {
   e.onclick = () => {
-    document.execCommand('formatblock', false, e.value);
+    console.log(window.getSelection().anchorNode.parentElement.tagName);
+
+    var x = window.getSelection().anchorNode.parentElement.tagName;
+    if( x == "UL" || x == "LI") {
+      //we're inside a list, don't allow any elements to be nested in here
+      document.getElementsByClassName('modal-editor')[0].focus();
+    } else {
+      document.execCommand('formatblock', false, e.value);
+    }
   }
+});
+
+function makeList() {
+  document.execCommand('insertHTML', false, '<ul><li></li></ul>');
+}
+
+function addListenerToListItems() {
+  document.querySelectorAll('.modal-editor li').forEach( function(e) {
+    e.onclick = function() {
+      if (e.getAttribute('data-checked')) {
+        e.removeAttribute('data-checked');
+        e.classList.remove('list-checked');
+      } else {
+        e.setAttribute('data-checked', 'checked');
+        e.classList.add('list-checked');
+      }
+      console.log(e);
+    }
+  })
+}
+
+document.getElementsByClassName('modal-editor')[0].addEventListener('keyup', function(e) {
+  document.getElementById('modal-editor-updated').textContent = "changes not saved!";
+  document.getElementById('modal-update-info').textContent = "changes not saved!";
+  addListenerToListItems();
 });
 
 
