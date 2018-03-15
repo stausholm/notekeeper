@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bodyParser = require('body-parser');
 const User = require('../models/user-model');
+const readingTime = require('reading-time');
 
 const jsonParser = bodyParser.json();
 
@@ -28,7 +29,7 @@ router.get('/', authCheck, (req, res) => {
 router.get('/requestSpecificDocument/:thisDoc', authCheck, (req, res) => {
   User.findOne({_id: req.user.id}).then((user) => {
     var doc = user.userDocuments.id(req.params.thisDoc);
-    res.send(doc);
+    res.send({thisDoc: doc, stats: readingTime(doc.noteBody)});
   })
 });
 

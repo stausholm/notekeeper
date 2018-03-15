@@ -12,19 +12,20 @@ document.querySelectorAll('li').forEach((e) => {
         var data = JSON.parse(xhttp.response);
         console.log(data);
         // populate modal with data
-        var created = new Date(data.created);
-        var updated = new Date(data.updated);
+        var created = new Date(data.thisDoc.created);
+        var updated = new Date(data.thisDoc.updated);
 
 
-        document.querySelector('.modal-editor').setAttribute('data-id', data._id);
-        document.querySelector('.modal-editor').innerHTML = data.noteBody;
-        document.getElementById('modal-title').textContent = data.noteBody.replace(/<(\/)?[a-zA-Z0-9\s"=-]+>/g, " ").substr(0,15) + "...";
-        document.getElementById('modal-word-count').textContent = data.noteBody.replace(/<(\/)?[a-zA-Z0-9\s"=-]+>/g, " ").length + " characters"; // length also counts newline as a character, so a doc with 19 letters spaced out on 6 lines, will have a length of 19+6
-        document.getElementById('modal-read-time').textContent = "TBD min read";
+        document.querySelector('.modal-editor').setAttribute('data-id', data.thisDoc._id);
+        document.querySelector('.modal-editor').innerHTML = data.thisDoc.noteBody;
+        document.getElementById('modal-title').textContent = data.thisDoc.noteBody.replace(/<(\/)?[a-zA-Z0-9\s"=-]+>/g, " ").substr(0,15) + "...";
+        document.getElementById('modal-word-count').textContent = data.stats.words + " words";
+        document.getElementById('modal-word-count').setAttribute('title', data.thisDoc.noteBody.replace(/<(\/)?[a-zA-Z0-9\s"=-]+>/g, " ").length + " characters"); // length also counts newline as a character, so a doc with 19 letters spaced out on 6 lines, will have a length of 19+6
+        document.getElementById('modal-read-time').textContent = data.stats.text;
         document.getElementById('modal-update-info').textContent = "Saved " + timeSince(updated) + " ago";
         document.getElementById('modal-editor-created').textContent = "Created: " + formatDate(created);
         document.getElementById('modal-editor-updated').textContent = "Last Updated: " + formatDate(updated);
-        document.querySelector('#star-btn img').setAttribute("src", data.favorite ? "/images/star-full.svg" : "/images/star-border.svg");
+        document.querySelector('#star-btn img').setAttribute("src", data.thisDoc.favorite ? "/images/star-full.svg" : "/images/star-border.svg");
         // document.getElementById('save-btn').setAttribute("data-id", data._id);
         // document.getElementById('delete-btn').setAttribute("data-id", data._id);
         addListenerToListItems();
