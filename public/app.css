@@ -149,6 +149,7 @@ ul.list-ul li p:last-of-type {
 #edit-modal .modal-header-body div div:last-of-type {
   margin-top: 28px;
   margin-left: -4px;
+  display: flex;
 }
 #edit-modal .modal-header-body button {
   border: none;
@@ -163,6 +164,7 @@ ul.list-ul li p:last-of-type {
   font-size: 14px;
   font-weight: 600;
   margin-right: 12px;
+  display: flex;
 }
 #edit-modal .modal-header-body button:last-of-type {
   margin-right: 0;
@@ -171,8 +173,16 @@ ul.list-ul li p:last-of-type {
   opacity: .8;
   cursor: pointer;
 }
+#edit-modal .modal-header-body button img {
+  width: 18px;
+  height: 18px;
+  margin-right: 3px;
+  margin-left: -3px;
+}
+
 #edit-modal .modal-body {
   margin: 40px auto;
+  position: relative;
 }
 
 
@@ -190,6 +200,7 @@ ul.list-ul li p:last-of-type {
   border: 1px solid rgba(0,0,0,0);
   margin: -10px;
   padding: 10px;
+  min-height: 250px;
 }
 
 
@@ -236,15 +247,72 @@ ul.list-ul li p:last-of-type {
   background: #525f7f;
 }
 
+#edit-modal .modal-editor:focus + .modal-editor-modifiers {
+  opacity: 1;
+}
+
+#edit-modal .modal-editor-modifiers {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+#edit-modal .modal-editor-modifiers button {
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+  border: none;
+  /* border-radius: 50%; */
+  /* margin-top: 10px; */
+  pointer-events: initial;
+  background: rgba(82, 95, 127, 0.15);
+  background: none;
+}
+/* #edit-modal .modal-editor-modifiers button:nth-child(2) {
+  border-bottom: 1px solid rgba(82, 95, 127, 0.1);
+  border-top: 1px solid rgba(82, 95, 127, 0.1);
+} */
+#edit-modal .modal-editor-modifiers button:nth-child(1) {
+  margin-top: 10px;
+}
+#edit-modal .modal-editor-modifiers hr {
+  margin: 5px 0;
+  border: none;
+  border-bottom: 1px solid rgba(82, 95, 127, 0.1);
+  width: 30px;
+}
+
+#edit-modal .modal-editor-modifiers button:hover {
+  cursor: pointer;
+  opacity: .8;
+  background: rgba(82, 95, 127, 0.1);
+}
 
 
 
+
+
+#edit-modal.scrolled .modal-editor-modifiers {
+  position: fixed;
+  top: 50px; /*80px*/
+  display: flex;
+  flex-direction: column;
+  left: calc(50% - 9px);
+  width: 100%;
+  max-width: 750px;
+  transform: translateX(-50%);
+  align-items: flex-end;
+}
 
 #edit-modal.scrolled .modal-header {
   position: fixed;
   max-width: 1140px;
   width: 100%;
   top: -250px;
+  z-index: 999;
   /* height: 50px; */
 }
 #edit-modal.scrolled .modal-header-body {

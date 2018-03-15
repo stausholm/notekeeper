@@ -10,8 +10,8 @@
           </div>
           <div class="">
             <button id="save-btn">&#x29BB; save</button>
-            <button id="star-btn">&#x29BB; star</button>
-            <button id="delete-btn">&#x29BB; delete</button>
+            <button id="star-btn"><img src="/images/star-border.svg"> star</button>
+            <button id="delete-btn"><img src="/images/delete.svg"> delete</button>
           </div>
         </div>
         <p id="modal-update-info">Saved 2 days ago</p>
@@ -22,10 +22,12 @@
 
       </div>
       <div class="modal-editor-modifiers">
-        <button value="p">P tag</button>
-        <button value="h2">h2 tag</button>
+        <button value="p" title="style paragraph (P)"><img src="/images/edit-p.svg" alt=""></button>
+        <hr>
+        <button value="h2" title="style header (H2)"><img src="/images/edit-h2.svg" alt=""></button>
+        <hr>
+        <button value="ul" title="style checklist (UL)"><img src="/images/edit-ul.svg" alt=""></button>
       </div>
-      <button onclick="makeList()">ul</button>
       <div class="modal-editor-info">
         <span id="modal-editor-created">Created: 25 March 2018 23:58</span>
         &nbsp;&nbsp;&bull;&nbsp;&nbsp;

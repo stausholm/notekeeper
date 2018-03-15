@@ -14,37 +14,19 @@ document.querySelectorAll('li').forEach((e) => {
         // populate modal with data
         var created = new Date(data.created);
         var updated = new Date(data.updated);
-        var now = new Date();
-        //var dateDiff = Math.floor((now - updated) / (1000*60*60*24)); //get the diff in days
-        var dateDiff = now - updated;
-        if (dateDiff < 1000*60) {
-          //diff is less than 1 minute
-          dateDiff = "less than 1 minute";
 
-        } else if (dateDiff < 1000*60*60) {
-          //diff is less than 1 hour
-          dateDiff = Math.floor((dateDiff) / (1000*60));
-          dateDiff = dateDiff > 1 ? dateDiff + " minutes" : dateDiff + " minute";
 
-        } else if (dateDiff < 1000*60*60*24) {
-          //diff is less than 24 hours
-          dateDiff = Math.floor((dateDiff) / (1000*60*60));
-          dateDiff = dateDiff > 1 ? dateDiff + " hours" : dateDiff + " hour";
-
-        } else {
-          dateDiff = Math.floor((dateDiff) / (1000*60*60*24));
-          dateDiff = dateDiff > 1 ? dateDiff + " days" : dateDiff + " day";
-        }
-
+        document.querySelector('.modal-editor').setAttribute('data-id', data._id);
         document.querySelector('.modal-editor').innerHTML = data.noteBody;
         document.getElementById('modal-title').textContent = data.noteBody.replace(/<(\/)?[a-zA-Z0-9\s"=-]+>/g, " ").substr(0,15) + "...";
         document.getElementById('modal-word-count').textContent = data.noteBody.replace(/<(\/)?[a-zA-Z0-9\s"=-]+>/g, " ").length + " characters"; // length also counts newline as a character, so a doc with 19 letters spaced out on 6 lines, will have a length of 19+6
         document.getElementById('modal-read-time').textContent = "TBD min read";
-        document.getElementById('modal-update-info').textContent = "Saved " + dateDiff + " ago";
+        document.getElementById('modal-update-info').textContent = "Saved " + timeSince(updated) + " ago";
         document.getElementById('modal-editor-created').textContent = "Created: " + formatDate(created);
         document.getElementById('modal-editor-updated').textContent = "Last Updated: " + formatDate(updated);
-        document.getElementById('save-btn').setAttribute("data-id", data._id);
-        document.getElementById('delete-btn').setAttribute("data-id", data._id);
+        document.querySelector('#star-btn img').setAttribute("src", data.favorite ? "/images/star-full.svg" : "/images/star-border.svg");
+        // document.getElementById('save-btn').setAttribute("data-id", data._id);
+        // document.getElementById('delete-btn').setAttribute("data-id", data._id);
         addListenerToListItems();
       }
     };
@@ -57,6 +39,7 @@ document.querySelectorAll('li').forEach((e) => {
 document.querySelector('#new-item-btn').onclick = function() {
   editModal();
   document.querySelector('.modal-editor').innerHTML = "";
+  document.querySelector('.modal-editor').removeAttribute('data-id');
   document.querySelector('.modal-editor').focus();
   document.getElementById('modal-title').textContent = "New Item...";
   document.getElementById('modal-word-count').textContent = "0 words";
@@ -64,8 +47,8 @@ document.querySelector('#new-item-btn').onclick = function() {
   document.getElementById('modal-update-info').textContent = "Item not saved yet!";
   document.getElementById('modal-editor-created').textContent = "Item not saved yet!";
   document.getElementById('modal-editor-updated').textContent = "";
-  document.getElementById('save-btn').removeAttribute("data-id");
-  document.getElementById('delete-btn').removeAttribute("data-id");
+  // document.getElementById('save-btn').removeAttribute("data-id");
+  // document.getElementById('delete-btn').removeAttribute("data-id");
 }
 
 
@@ -106,7 +89,29 @@ function editModal() {
 
 
 
+function timeSince(date) {
+  var now = new Date();
+  var dateDiff = now - date;
+  if (dateDiff < 1000*60) {
+    //diff is less than 1 minute
+    dateDiff = "less than 1 minute";
 
+  } else if (dateDiff < 1000*60*60) {
+    //diff is less than 1 hour
+    dateDiff = Math.floor((dateDiff) / (1000*60));
+    dateDiff = dateDiff > 1 ? dateDiff + " minutes" : dateDiff + " minute";
+
+  } else if (dateDiff < 1000*60*60*24) {
+    //diff is less than 24 hours
+    dateDiff = Math.floor((dateDiff) / (1000*60*60));
+    dateDiff = dateDiff > 1 ? dateDiff + " hours" : dateDiff + " hour";
+
+  } else {
+    dateDiff = Math.floor((dateDiff) / (1000*60*60*24));
+    dateDiff = dateDiff > 1 ? dateDiff + " days" : dateDiff + " day";
+  }
+  return dateDiff;
+}
 
 
 function formatDate(date) {
@@ -151,12 +156,15 @@ document.querySelectorAll('.modal-editor-modifiers button').forEach((e) => {
   e.onclick = () => {
     console.log(window.getSelection().anchorNode.parentElement.tagName);
 
+    if (e.value == 'ul') {return makeList();}
+
     var x = window.getSelection().anchorNode.parentElement.tagName;
     if( x == "UL" || x == "LI") {
       //we're inside a list, don't allow any elements to be nested in here
       document.getElementsByClassName('modal-editor')[0].focus();
     } else {
       document.execCommand('formatblock', false, e.value);
+      document.getElementsByClassName('modal-editor')[0].focus();
     }
   }
 });
@@ -190,11 +198,42 @@ document.getElementsByClassName('modal-editor')[0].addEventListener('keyup', fun
 
 
 
+document.querySelector('#star-btn').onclick = function() {
+  if (document.querySelector('.modal-editor').hasAttribute("data-id")) {
+    var inputValue = document.querySelector('.modal-editor').innerHTML;
+    var item = document.querySelector('.modal-editor').getAttribute("data-id");
+    var fav;
+
+    document.querySelector('#star-btn img').getAttribute("src") == "/images/star-full.svg" ? fav = false : fav = true;
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.open("PUT", "/keep/requestSpecificDocument/" + item, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify({
+      noteBody: inputValue,
+      favorite: fav,
+      updated: Date()
+    }));
+
+    xhttp.onload = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var data = JSON.parse(xhttp.responseText);
+        console.log(data);
+        location.reload();
+      }
+    }
+  } else {
+    console.log('you are trying to star an item you havent saved yet');
+  }
+}
+
+
 
 
 document.querySelector('#delete-btn').onclick = function() {
-  if (document.getElementById('delete-btn').hasAttribute("data-id")) {
-    var item = document.getElementById('delete-btn').getAttribute("data-id");
+  if (document.querySelector('.modal-editor').hasAttribute("data-id")) {
+    var item = document.querySelector('.modal-editor').getAttribute("data-id");
     var xhttp = new XMLHttpRequest();
 
     xhttp.open("DELETE", "/keep/requestSpecificDocument/" + item, true);
@@ -245,9 +284,9 @@ document.getElementById('delete-user-btn').onclick = function() {
 document.querySelector('#save-btn').onclick = function() {
   var inputValue = document.querySelector('.modal-editor').innerHTML;
 
-  if (document.getElementById('save-btn').hasAttribute("data-id")) {
+  if (document.querySelector('.modal-editor').hasAttribute("data-id")) {
     // there is a data-id data attribute, so we must be editing an existing item in the db
-    var item = document.getElementById('save-btn').getAttribute("data-id");
+    var item = document.querySelector('.modal-editor').getAttribute("data-id");
     var xhttp = new XMLHttpRequest();
 
     xhttp.open("PUT", "/keep/requestSpecificDocument/" + item, true);

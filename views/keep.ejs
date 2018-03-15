@@ -23,7 +23,7 @@
       <% if (user.userDocuments.length > 0) { %>
         <% for (var i = 0; i < user.userDocuments.length; i++) { %>
           <li data-id="<%= user.userDocuments[i]._id %>">
-            <p><%= user.userDocuments[i].noteBody.replace(/<(\/)?[a-zA-Z0-9\s"=-]+>/g, " ").substr(0,65) %>...</p>
+            <p><% if(user.userDocuments[i].favorite == true) {%>★ <%} %><%= user.userDocuments[i].noteBody.replace(/<(\/)?[a-zA-Z0-9\s"=-]+>/g, " ").substr(0,65) %>...</p>
             <p><%= user.userDocuments[i].updated %></p>
           </li>
         <% } %>

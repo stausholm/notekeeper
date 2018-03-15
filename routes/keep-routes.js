@@ -61,8 +61,9 @@ router.put('/requestSpecificDocument/:thisDoc', authCheck, jsonParser, (req, res
     var doc = user.userDocuments.id(req.params.thisDoc);
     doc.noteBody = req.body.noteBody;
     doc.updated = req.body.updated;
+    doc.favorite = req.body.favorite;
     user.save().then((record) => {
-      console.log('record updated: ' + record);
+      console.log('record updated: ' + record.userDocuments.id(req.params.thisDoc));
       //this returns the updated user without the updated record
       res.send(record);
     })
@@ -70,7 +71,7 @@ router.put('/requestSpecificDocument/:thisDoc', authCheck, jsonParser, (req, res
 });
 
 
-// delete the user and all their data 
+// delete the user and all their data
 router.delete('/', authCheck, (req, res) => {
   User.findByIdAndRemove({_id:req.user.id}).then((user) => {
     console.log('user deleted');
