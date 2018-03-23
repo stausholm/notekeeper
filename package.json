@@ -1,6 +1,9 @@
 {
   "name": "notekeep",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.9.4"
+  },
   "description": "Keeping notes online with OAuth",
   "main": "app.js",
   "scripts": {
